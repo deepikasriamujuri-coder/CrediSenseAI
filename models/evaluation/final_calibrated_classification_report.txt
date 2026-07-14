@@ -1,0 +1,9 @@
+=== Final Calibrated Selected System Test Evaluation ===
+              precision    recall  f1-score   support
+
+           0     0.8904    0.9838    0.9348      5064
+           1     0.9076    0.5677    0.6985      1418
+
+    accuracy                         0.8928      6482
+   macro avg     0.8990    0.7758    0.8166      6482
+weighted avg     0.8942    0.8928    0.8831      6482

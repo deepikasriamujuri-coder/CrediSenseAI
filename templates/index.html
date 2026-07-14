@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}CrediSense AI - Explainable Credit Risk Dashboard{% endblock %}
+
+{% block content %}
+    <!-- 1. Hero Section -->
+    <section class="hero-section animate-fade-in">
+        <div class="hero-content">
+            <div class="hero-badge">AI-Powered Credit Analytics</div>
+            <h1 class="hero-title">Understand Credit Risk.<br><span>Explain every prediction.</span></h1>
+            <p class="hero-description">
+                An advanced academic decision-support platform utilizing tuned gradient boosting tree ensembles and isotonic calibration to assess default risk, backed by SHAP explanations.
+            </p>
+            <div class="hero-buttons">
+                <a href="#assessment-form" class="btn btn-primary">Start Risk Assessment</a>
+                <a href="#model-insights" class="btn btn-secondary">Explore Model Insights</a>
+            </div>
+        </div>
+        
+        <div class="hero-preview">
+            <div class="preview-header">
+                <span style="font-weight: 700; font-size: 0.95rem;">Demonstration Snapshot</span>
+                <span class="preview-badge-status">Approved Support</span>
+            </div>
+            <div class="preview-score-area">
+                <div class="preview-score-circle">
+                    <span>2.2%</span>
+                </div>
+                <div>
+                    <h4 style="margin: 0; color: var(--color-success);">Low Risk Category</h4>
+                    <p style="font-size: 0.85rem; margin: 0; color: var(--text-secondary);">Calibrated Default Probability</p>
+                </div>
+            </div>
+            <div>
+                <div class="preview-chart-row">
+                    <span>Loan-to-Income (16.7%)</span>
+                    <div class="preview-bar-wrapper">
+                        <div class="preview-bar" style="width: 17%; background-color: var(--color-success);"></div>
+                    </div>
+                    <span style="color: var(--color-success); font-weight: bold;">-0.55 SHAP</span>
+                </div>
+                <div style="margin-top: 8px;" class="preview-chart-row">
+                    <span>Home Ownership: RENT</span>
+                    <div class="preview-bar-wrapper">
+                        <div class="preview-bar" style="width: 40%; background-color: var(--color-danger);"></div>
+                    </div>
+                    <span style="color: var(--color-danger); font-weight: bold;">+0.19 SHAP</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Trust & Verified Metrics Section -->
+    <section class="metrics-section">
+        <div class="metrics-container">
+            <div class="metric-item">
+                <h4>XGBoost</h4>
+                <p>Tuned Ensemble Model</p>
+            </div>
+            <div class="metric-item">
+                <h4>Isotonic</h4>
+                <p>Probability Calibration</p>
+            </div>
+            <div class="metric-item">
+                <h4>9 Features</h4>
+                <p>Applicant Input Schema</p>
+            </div>
+            <div class="metric-item">
+                <h4>67 Tests</h4>
+                <p>Automated Verification Passed</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. How It Works Section -->
+    <section id="how-it-works" class="workflow-section">
+        <div class="section-header">
+            <h2>System Workflow Steps</h2>
+            <p>A connected pipeline translating raw applicant profiles into explainable risk predictions.</p>
+        </div>
+        <div class="workflow-grid">
+            <div class="card workflow-card">
+                <div class="workflow-icon">&#128100;</div>
+                <h4>1. Profile Inputs</h4>
+                <p>Provide financial details, requested loan values, and previous defaults.</p>
+            </div>
+            <div class="card workflow-card">
+                <div class="workflow-icon">&#9878;</div>
+                <h4>2. Data Pipeline</h4>
+                <p>Validates bounds, performs imputation, and normalizes numeric values.</p>
+            </div>
+            <div class="card workflow-card">
+                <div class="workflow-icon">&#9881;</div>
+                <h4>3. XGBoost + Calibration</h4>
+                <p>Ensemble scores defaults, and Isotonic Calibration aligns probabilities.</p>
+            </div>
+            <div class="card workflow-card">
+                <div class="workflow-icon">&#128269;</div>
+                <h4>4. SHAP Explanation</h4>
+                <p>Generates human-friendly log-odds contribution reports per feature.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Interactive Risk Assessment Form -->
+    <section id="assessment-form" class="form-section">
+        <div class="form-container">
+            <div class="section-header" style="margin-bottom: 2.5rem; text-align: left;">
+                <h2>Credit Risk Assessment</h2>
+                <p>Submit details below to generate calibrated default probabilities and SHAP descriptions.</p>
+            </div>
+            
+            <form action="/predict" method="POST">
+                <div class="form-grid">
+                    <!-- Personal Profile Group -->
+                    <div class="form-group-title">1. Applicant Profile</div>
+                    
+                    <div class="form-field">
+                        <label for="person_age">Age (Years)</label>
+                        <input type="number" id="person_age" name="person_age" min="18" max="100" required placeholder="E.g. 35">
+                        <small>Allowed range: 18 - 100</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="person_emp_length">Employment Length (Years)</label>
+                        <input type="number" id="person_emp_length" name="person_emp_length" min="0" step="0.5" required placeholder="E.g. 5">
+                        <small>Cannot exceed (Age - 14)</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="person_home_ownership">Home Ownership</label>
+                        <select id="person_home_ownership" name="person_home_ownership" required>
+                            <option value="RENT">RENT</option>
+                            <option value="MORTGAGE">MORTGAGE</option>
+                            <option value="OWN">OWN</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                        <small>Category choice</small>
+                    </div>
+                    
+                    <!-- Financial Profile Group -->
+                    <div class="form-group-title">2. Financial Ledger</div>
+                    
+                    <div class="form-field">
+                        <label for="person_income">Annual Income ($)</label>
+                        <input type="number" id="person_income" name="person_income" min="0" required placeholder="E.g. 60000">
+                        <small>Min value: 0</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="cb_person_default_on_file">Previous Default History</label>
+                        <select id="cb_person_default_on_file" name="cb_person_default_on_file" required>
+                            <option value="N">No (N)</option>
+                            <option value="Y">Yes (Y)</option>
+                        </select>
+                        <small>Past credit defaults</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="cb_person_cred_hist_length">Credit History Length (Years)</label>
+                        <input type="number" id="cb_person_cred_hist_length" name="cb_person_cred_hist_length" min="0" required placeholder="E.g. 5">
+                        <small>Min value: 0</small>
+                    </div>
+                    
+                    <!-- Loan Request Group -->
+                    <div class="form-group-title">3. Loan Details</div>
+                    
+                    <div class="form-field">
+                        <label for="loan_amnt">Requested Loan Amount ($)</label>
+                        <input type="number" id="loan_amnt" name="loan_amnt" min="1" required placeholder="E.g. 10000">
+                        <small>Min value: 1</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="loan_intent">Loan Purpose</label>
+                        <select id="loan_intent" name="loan_intent" required>
+                            <option value="PERSONAL">PERSONAL</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="MEDICAL">MEDICAL</option>
+                            <option value="VENTURE">VENTURE</option>
+                            <option value="HOMEIMPROVEMENT">HOME IMPROVEMENT</option>
+                            <option value="DEBTCONSOLIDATION">DEBT CONSOLIDATION</option>
+                        </select>
+                        <small>Purpose category</small>
+                    </div>
+                    
+                    <div class="form-field">
+                        <label for="loan_percent_income">Loan-to-Income Ratio</label>
+                        <input type="number" id="loan_percent_income" name="loan_percent_income" min="0.0" max="1.0" step="0.0001" required placeholder="Calculated automatically">
+                        <small>Auto-calculated from income and loan</small>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary" style="padding: 14px 40px;">Assess Credit Risk</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 5. Model Transparency Section -->
+    <section class="workflow-section" style="background-color: var(--bg-primary); border-top: 1px solid var(--border-color);">
+        <div class="section-header">
+            <h2>Model Transparency & Rules</h2>
+            <p>Details behind our prediction metrics, calibration scales, and boundaries.</p>
+        </div>
+        <div class="workflow-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="card">
+                <h4 style="color: var(--color-primary); margin-bottom: 15px;">XGBoost Classifier</h4>
+                <p style="font-size: 0.9rem;">
+                    Scores applicant defaults using gradient boosting trees. Evaluated strictly inside cross-validation splits to prevent data leakage.
+                </p>
+            </div>
+            <div class="card">
+                <h4 style="color: var(--color-primary); margin-bottom: 15px;">Isotonic Calibration</h4>
+                <p style="font-size: 0.9rem;">
+                    Maps raw boosted scores into reliable empirical probabilities. Platt and Isotonic systems were compared, with Isotonic chosen due to its low Brier score (0.0849).
+                </p>
+            </div>
+            <div class="card">
+                <h4 style="color: var(--color-primary); margin-bottom: 15px;">Risk Boundaries</h4>
+                <p style="font-size: 0.9rem; text-align: left;">
+                    The 0.12 and 0.35 thresholds are policy-selected boundaries supported by out-of-fold training data:
+                    <br>&bull; <strong>Low Risk</strong>: P &lt; 0.12 (4.7% default rate)
+                    <br>&bull; <strong>Medium Risk</strong>: 0.12 &le; P &lt; 0.35
+                    <br>&bull; <strong>High Risk</strong>: P &ge; 0.35 (79.2% default rate)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Model Insights & Visualization Section -->
+    <section id="model-insights" class="insights-section">
+        <div class="section-header">
+            <h2>Academic Model Insights</h2>
+            <p>Global explainability reports extracted using SHAP on a representative sample of 500 training records.</p>
+        </div>
+        <div class="insights-grid">
+            <div class="insight-image-card">
+                <div class="insight-image-wrapper">
+                    <!-- Global Beeswarm -->
+                    <img src="/static/images/shap/shap_summary_plot.png" alt="SHAP Beeswarm Summary Plot">
+                </div>
+                <div class="insight-desc">
+                    <h4>SHAP Beeswarm Summary Plot</h4>
+                    <p>
+                        Displays features sorted by global impact. High annual income (blue dots) pushes risk lower, while high loan-to-income ratio (red dots) shifts predicted default risk higher.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="insight-image-card">
+                <div class="insight-image-wrapper">
+                    <!-- Global Feature Importance Bar Chart -->
+                    <img src="/static/images/shap/shap_bar_importance.png" alt="SHAP Feature Importance Bar Chart">
+                </div>
+                <div class="insight-desc">
+                    <h4>SHAP Global Feature Importance</h4>
+                    <p>
+                        Measures average absolute SHAP values across the sample. Annual Income and Loan-to-Income represent the dominant drivers in the underlying XGBoost model.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

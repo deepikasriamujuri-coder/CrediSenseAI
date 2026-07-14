@@ -1,0 +1,13 @@
+=== XGBoost (Weighted) Test Set Classification Report ===
+              precision    recall  f1-score   support
+
+           0     0.9274    0.8910    0.9089      5064
+           1     0.6586    0.7511    0.7018      1418
+
+    accuracy                         0.8604      6482
+   macro avg     0.7930    0.8210    0.8053      6482
+weighted avg     0.8686    0.8604    0.8636      6482
+
+Confusion Matrix:
+[[4512  552]
+ [ 353 1065]]

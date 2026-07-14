@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}CrediSense AI - About & Methodology{% endblock %}
+
+{% block content %}
+<div class="animate-fade-in" style="max-width: 1100px; margin: 40px auto; padding: 0 2rem;">
+    <div class="section-header" style="text-align: left; margin-bottom: 2.5rem;">
+        <h2>System Architecture & Methodology</h2>
+        <p>A full survey of our data pipeline, calibration routines, and SHAP explainability layer.</p>
+    </div>
+    
+    <div class="about-grid">
+        <!-- Text details -->
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <div class="card">
+                <h3 style="color: var(--color-primary); margin-bottom: 15px;">Project Objective</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6;">
+                    <strong>CrediSense AI</strong> is an academic decision-support platform designed to predict credit risk, estimate default probabilities, and generate local SHAP explanations for applicant profiles. It is designed as a university final-year B.Tech machine learning project and is not intended to make real-world lending or loan approval commitments.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3 style="color: var(--color-primary); margin-bottom: 15px;">Model Details</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6;">
+                    The core estimator is a tuned **XGBoost Classifier** ensemble model. Features like age and employment duration are cleaned of outliers and duplicates (final training set $N=25,927$ records), stratified by target, and fit inside a pipeline. Variables that are determined downstream (such as `loan_grade` and `loan_int_rate`) are explicitly excluded to align with standard applicant-time workflows.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3 style="color: var(--color-primary); margin-bottom: 15px;">Probability Calibration</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6;">
+                    Raw boosting tree scores can be uncalibrated. We apply **Isotonic Calibration** downstream using out-of-fold validation slices. This optimization reduces the Brier Score from 0.1073 to 0.0849, improving probability reliability.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3 style="color: var(--color-primary); margin-bottom: 15px;">Responsible AI & Fairness</h3>
+                <p style="font-size: 0.95rem; line-height: 1.6;">
+                    Age can raise fairness, ethical, and regulatory considerations depending on jurisdiction and application context. No claims of legal compliance are made. The system is designed as an educational Decision-Support System (DSS).
+                </p>
+            </div>
+        </div>
+        
+        <!-- Visual Architecture column -->
+        <div class="architecture-wrapper">
+            <h3 style="margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Pipeline Flow</h3>
+            <div class="arch-step">
+                <div class="arch-number">1</div>
+                <div>
+                    <h5 style="margin: 0;">Dataset Input</h5>
+                    <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary);">9 applicant features</p>
+                </div>
+            </div>
+            <div class="arch-step">
+                <div class="arch-number">2</div>
+                <div>
+                    <h5 style="margin: 0;">Preprocessing Pipeline</h5>
+                    <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary);">Imputation & Robust scaling</p>
+                </div>
+            </div>
+            <div class="arch-step">
+                <div class="arch-number">3</div>
+                <div>
+                    <h5 style="margin: 0;">XGBoost Classifier</h5>
+                    <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary);">Tuned tree ensembles</p>
+                </div>
+            </div>
+            <div class="arch-step">
+                <div class="arch-number">4</div>
+                <div>
+                    <h5 style="margin: 0;">Isotonic Calibration</h5>
+                    <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary);">Probability reliability</p>
+                </div>
+            </div>
+            <div class="arch-step">
+                <div class="arch-number">5</div>
+                <div>
+                    <h5 style="margin: 0;">SHAP Explanation</h5>
+                    <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary);">Bagged log-odds contributions</p>
+                </div>
+            </div>
+            <div class="arch-step" style="margin-bottom: 0;">
+                <div class="arch-number">6</div>
+                <div>
+                    <h5 style="margin: 0;">Flask UI Dashboard</h5>
+                    <p style="font-size: 0.8rem; margin: 0; color: var(--text-secondary);">Interactive results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 40px;">
+        <a href="/" class="btn btn-primary">Return to Assessment</a>
+    </div>
+</div>
+{% endblock %}

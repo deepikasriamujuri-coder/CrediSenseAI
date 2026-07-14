@@ -1,0 +1,967 @@
+/* --------------------------------------------------
+   CrediSense AI - Design System Stylesheet
+   -------------------------------------------------- */
+
+/* 1. Variables */
+:root {
+    --bg-primary: #0b0f19;
+    --bg-secondary: #111827;
+    --bg-surface: #1e293b;
+    --bg-surface-glass: rgba(30, 41, 59, 0.7);
+    
+    --color-primary: #2a9d8f;
+    --color-primary-hover: #228074;
+    --color-secondary: #3a86c8;
+    
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color-focus: #3a86c8;
+    
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 20px;
+    
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+    
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 2. Reset / Base */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3. Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 0.5em;
+    color: var(--text-primary);
+}
+
+h1 { font-size: 2.5rem; letter-spacing: -0.02em; }
+h2 { font-size: 2rem; margin-bottom: 1rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.2rem; }
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+/* 4. Navbar */
+.navbar {
+    background-color: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.2rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+}
+
+.nav-brand span {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile Nav Toggle */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Main Container Wrapper */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 5. Hero Section */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    padding: 6rem 4rem;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.hero-badge {
+    background-color: rgba(42, 157, 143, 0.15);
+    color: var(--color-primary);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(42, 157, 143, 0.25);
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.15;
+}
+
+.hero-title span {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Hero Preview Dashboard */
+.hero-preview {
+    background: var(--bg-surface-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.preview-badge-status {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: var(--color-success);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.preview-score-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.preview-score-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 8px solid rgba(255, 255, 255, 0.05);
+    border-top-color: var(--color-success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+    transform: rotate(45deg);
+}
+
+.preview-score-circle span {
+    transform: rotate(-45deg);
+}
+
+.preview-chart-row {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.preview-bar-wrapper {
+    flex: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    margin: 0 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--color-primary);
+    border-radius: 10px;
+}
+
+/* 6. Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    gap: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: var(--text-primary);
+    box-shadow: 0 4px 14px rgba(42, 157, 143, 0.25);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 157, 143, 0.35);
+}
+
+.btn-secondary {
+    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+}
+
+/* 7. Cards */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.2rem;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-smooth);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 8. Metrics Section */
+.metrics-section {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 3rem 2rem;
+}
+
+.metrics-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+
+.metric-item h4 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 5px;
+}
+
+.metric-item p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0;
+}
+
+/* 9. Workflow Section */
+.workflow-section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-header {
+    margin-bottom: 4rem;
+}
+
+.section-header h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.workflow-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.workflow-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.workflow-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    background-color: rgba(42, 157, 143, 0.1);
+    border: 1px solid rgba(42, 157, 143, 0.2);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.workflow-card h4 {
+    margin-bottom: 10px;
+}
+
+.workflow-card p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* 10. Form Section */
+.form-section {
+    background-color: var(--bg-secondary);
+    padding: 6rem 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.form-container {
+    max-width: 950px;
+    margin: 0 auto;
+    background: var(--bg-surface-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.form-group-title {
+    grid-column: span 3;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.5rem 0;
+    color: var(--color-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 5px;
+}
+
+.form-group-title:first-of-type {
+    margin-top: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 2rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.form-field input, .form-field select {
+    background-color: rgba(15, 23, 42, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+}
+
+.form-field input:focus, .form-field select:focus {
+    outline: none;
+    border-color: var(--border-color-focus);
+    box-shadow: 0 0 0 3px rgba(58, 134, 200, 0.2);
+}
+
+.form-field small {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+
+/* Submission Spinner */
+.spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 11. Results Dashboard */
+.results-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 2.5rem;
+}
+
+.result-card-main {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: var(--shadow-md);
+}
+
+.result-status-badge {
+    align-self: flex-start;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.5rem;
+}
+
+.badge-low { background-color: var(--color-success); }
+.badge-medium { background-color: var(--color-warning); }
+.badge-high { background-color: var(--color-danger); }
+
+.probability-val {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+/* 12. Risk Gauge Component */
+.gauge-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gauge-track-wrapper {
+    margin: 2.5rem 0;
+    position: relative;
+}
+
+.gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.gauge-track {
+    height: 16px;
+    border-radius: 20px;
+    background: linear-gradient(to right, var(--color-success) 0%, var(--color-success) 12%, var(--color-warning) 12%, var(--color-warning) 35%, var(--color-danger) 35%, var(--color-danger) 100%);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gauge-pin {
+    width: 24px;
+    height: 24px;
+    background-color: var(--text-primary);
+    border: 4px solid var(--bg-primary);
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    transition: left 0.5s ease-out;
+}
+
+.gauge-axis-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* 13. SHAP Contributions */
+.shap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.shap-panel {
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+}
+
+.panel-increasing {
+    background-color: rgba(239, 68, 68, 0.02);
+    border-color: rgba(239, 68, 68, 0.1);
+}
+
+.panel-increasing h3 {
+    color: var(--color-danger);
+    border-bottom: 1px solid rgba(239, 68, 68, 0.15);
+    padding-bottom: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.panel-decreasing {
+    background-color: rgba(16, 185, 129, 0.02);
+    border-color: rgba(16, 185, 129, 0.1);
+}
+
+.panel-decreasing h3 {
+    color: var(--color-success);
+    border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+    padding-bottom: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.factor-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 14px 18px;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+.factor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.factor-impact-badge {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.impact-inc { background-color: rgba(239, 68, 68, 0.15); color: var(--color-danger); }
+.impact-dec { background-color: rgba(16, 185, 129, 0.15); color: var(--color-success); }
+
+.factor-desc {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.45;
+}
+
+/* 14. Model Insights Section */
+.insights-section {
+    padding: 6rem 2rem;
+    max-width: 1250px;
+    margin: 0 auto;
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.insight-image-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.insight-image-wrapper {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius-md);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.insight-image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.insight-desc h4 {
+    margin-bottom: 6px;
+}
+
+.insight-desc p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0;
+}
+
+/* 15. About Page Layout */
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.architecture-wrapper {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.arch-step {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 12px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.arch-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-primary);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+/* 16. Error Page layout */
+.error-container {
+    max-width: 600px;
+    margin: 100px auto;
+    text-align: center;
+    padding: 3rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(239, 68, 68, 0.15);
+    background-color: rgba(239, 68, 68, 0.01);
+}
+
+.error-icon {
+    font-size: 4rem;
+    color: var(--color-danger);
+    margin-bottom: 1.5rem;
+}
+
+/* 17. Footer */
+.footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 4rem 3rem 2rem 3rem;
+    margin-top: auto;
+}
+
+.footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+.footer-brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.footer-brand span {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.footer-links-col h5 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.footer-links-col ul {
+    list-style: none;
+}
+
+.footer-links-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links-col ul li a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.footer-links-col ul li a:hover {
+    color: var(--text-primary);
+}
+
+.footer-disclaimer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* 18. Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* 19. Responsive Breakpoints */
+@media (max-width: 1024px) {
+    .hero-section {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 4rem 2rem;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1.2rem;
+    }
+    
+    .nav-links {
+        display: none; /* In production, write responsive menu */
+    }
+    
+    .nav-toggle {
+        display: block;
+    }
+    
+    .metrics-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+    
+    .workflow-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .shap-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .metrics-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .workflow-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 20. Accessibility (Reduced Motion) */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-delay: 0s !important;
+        animation-duration: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0s !important;
+        scroll-behavior: auto !important;
+    }
+}

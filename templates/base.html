@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CrediSense AI - Explainable Credit Decision Support{% endblock %}</title>
+    <!-- Google Fonts Inter Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main Style Sheets -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar Header -->
+    <header class="navbar">
+        <a href="/" class="nav-brand">
+            <span>CrediSense AI</span>
+        </a>
+        <button class="nav-toggle" aria-label="Toggle navigation Menu">&#9776;</button>
+        <nav class="nav-links" aria-label="Main Navigation">
+            <a href="/">Home</a>
+            <a href="/#assessment-form">Risk Assessment</a>
+            <a href="/#how-it-works">How It Works</a>
+            <a href="/#model-insights">Model Insights</a>
+            <a href="/about">About System</a>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- High-Contrast Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-brand"><span>CrediSense AI</span></div>
+                <p style="font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary);">
+                    An explainable AI decision-support platform designed to predict credit risk, calibrate default probabilities, and analyze feature-level influence using SHAP.
+                </p>
+            </div>
+            <div class="footer-links-col">
+                <h5>Resource Links</h5>
+                <ul>
+                    <li><a href="/">Risk Assessment Form</a></li>
+                    <li><a href="/about">Model Methodology</a></li>
+                    <li><a href="/health">System Health API</a></li>
+                    <li><a href="/api/model-info">Model Metadata Info</a></li>
+                </ul>
+            </div>
+            <div class="footer-links-col">
+                <h5>Technology Stack</h5>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5;">
+                    Python 3.10 &bull; Flask &bull; XGBoost &bull; Scikit-Learn &bull; Isotonic Calibration &bull; SHAP Explainability
+                </p>
+            </div>
+        </div>
+        <div class="footer-disclaimer-bottom">
+            <p style="margin-bottom: 5px; font-weight: bold; color: var(--text-secondary);">Academic Project Disclaimer:</p>
+            <p style="margin-bottom: 15px;">
+                This system is a B.Tech final-year machine learning project built for training and educational purposes. It does not represent an actual automated banking credit decisionmaker, does not provide legal compliance statements, and does not constitute credit approvals or binding financial lending commitments.
+            </p>
+            <p>&copy; 2026 CrediSense AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Client-side Interactions -->
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

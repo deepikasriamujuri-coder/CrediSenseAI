@@ -1,0 +1,11 @@
+=== Final Selected Champion Test Set Evaluation ===
+Model Configuration: Tuned XGBoost Weighted
+
+              precision    recall  f1-score   support
+
+           0     0.9289    0.8778    0.9026      5064
+           1     0.6352    0.7602    0.6921      1418
+
+    accuracy                         0.8521      6482
+   macro avg     0.7821    0.8190    0.7974      6482
+weighted avg     0.8647    0.8521    0.8566      6482

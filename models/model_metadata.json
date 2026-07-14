@@ -1,0 +1,76 @@
+{
+    "project_name": "CrediSense AI: Explainable Credit Approval & Risk Assessment System",
+    "model_type": "CalibratedClassifierCV(XGBClassifier)",
+    "model_library_versions": {
+        "xgboost": "3.2.0",
+        "scikit-learn": "1.7.2",
+        "joblib": "1.5.3"
+    },
+    "training_date": "2026-07-14",
+    "feature_names": [
+        "person_age",
+        "person_income",
+        "person_emp_length",
+        "loan_amnt",
+        "loan_percent_income",
+        "cb_person_cred_hist_length",
+        "person_home_ownership_MORTGAGE",
+        "person_home_ownership_OTHER",
+        "person_home_ownership_OWN",
+        "person_home_ownership_RENT",
+        "loan_intent_DEBTCONSOLIDATION",
+        "loan_intent_EDUCATION",
+        "loan_intent_HOMEIMPROVEMENT",
+        "loan_intent_MEDICAL",
+        "loan_intent_PERSONAL",
+        "loan_intent_VENTURE",
+        "cb_person_default_on_file_N",
+        "cb_person_default_on_file_Y"
+    ],
+    "excluded_features": [
+        "loan_grade",
+        "loan_int_rate"
+    ],
+    "target_name": "loan_status",
+    "class_mapping": {
+        "0": "Lower observed credit/default risk class (historically did not default)",
+        "1": "Higher observed credit/default risk class (historically defaulted)"
+    },
+    "hyperparameters": {
+        "n_estimators": 100,
+        "max_depth": 5,
+        "learning_rate": 0.2,
+        "min_child_weight": 1,
+        "subsample": 0.9,
+        "colsample_bytree": 0.7,
+        "gamma": 0.1,
+        "reg_alpha": 0.1,
+        "reg_lambda": 5,
+        "scale_pos_weight": 3.572663139329806
+    },
+    "scale_pos_weight_explanation": "Imbalance weighting ratio derived from training-set class ratio (Class 0 count / Class 1 count). Adjusts loss function weight of minority defaults class.",
+    "calibration_method": "isotonic",
+    "classification_threshold": 0.5,
+    "risk_category_boundaries": {
+        "low_risk_upper_bound": 0.12,
+        "high_risk_lower_bound": 0.35
+    },
+    "cv_metrics": {
+        "CV_PR_AUC": 0.8125699649270762,
+        "CV_ROC_AUC": 0.9047366597547578,
+        "CV_Brier_Score": 0.08490192730986414,
+        "CV_Log_Loss": 0.27993058924187253
+    },
+    "final_held_out_test_metrics": {
+        "Accuracy": 0.8927800061709349,
+        "Precision": 0.9075535512965051,
+        "Recall": 0.5677009873060649,
+        "F1_Score": 0.6984815618221258,
+        "ROC_AUC": 0.9094205592951824,
+        "PR_AUC": 0.8262769282911958,
+        "Brier_Score": 0.0805602273761386,
+        "Log_Loss": 0.27358038045411437
+    },
+    "dataset_size": 32409,
+    "random_state": 42
+}

@@ -1,0 +1,13 @@
+=== Logistic Regression (Balanced) Test Set Classification Report ===
+              precision    recall  f1-score   support
+
+           0     0.9003    0.7510    0.8189      5064
+           1     0.4415    0.7031    0.5424      1418
+
+    accuracy                         0.7405      6482
+   macro avg     0.6709    0.7270    0.6807      6482
+weighted avg     0.8000    0.7405    0.7584      6482
+
+Confusion Matrix:
+[[3803 1261]
+ [ 421  997]]

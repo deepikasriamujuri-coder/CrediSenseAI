@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}CrediSense AI - System Error{% endblock %}
+
+{% block content %}
+<div class="error-container animate-fade-in">
+    <div class="error-icon">&#9888;</div>
+    <h2>{{ title or "System Error" }}</h2>
+    <p style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem;">
+        {{ message or "An unexpected issue occurred during processing." }}
+    </p>
+    
+    <div style="background-color: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 18px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; text-align: left;">
+        <strong>Validation Tips:</strong>
+        <br>&bull; Verify applicant age is between 18 and 100.
+        <br>&bull; Ensure employment duration does not exceed (Age - 14) years.
+        <br>&bull; Make sure all financial values (Income, Loan Amount) are positive numbers.
+    </div>
+    
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="/" class="btn btn-primary">Return to Homepage</a>
+    </div>
+</div>
+{% endblock %}

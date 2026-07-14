@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}CrediSense AI - Risk Assessment Results{% endblock %}
+
+{% block content %}
+<div class="results-container animate-fade-in">
+    <div class="section-header" style="text-align: left; margin-bottom: 0;">
+        <h2>Assessment Dashboard</h2>
+        <p>Analyze prediction probability, risk category allocation, and feature contributions.</p>
+    </div>
+    
+    <!-- Results Dashboard Grid -->
+    <div class="results-grid">
+        <!-- Result Summary Card -->
+        <div class="result-card-main">
+            <div>
+                <span class="result-status-badge 
+                    {% if prediction.risk_category == 'Low' %}badge-low
+                    {% elif prediction.risk_category == 'Medium' %}badge-medium
+                    {% else %}badge-high{% endif %}">
+                    {{ prediction.risk_category }} Risk Category
+                </span>
+                
+                <p style="margin-top: 15px; font-size: 0.95rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 5px;">Calibrated Probability of Default</p>
+                <div class="probability-val" style="color: 
+                    {% if prediction.risk_category == 'Low' %}var(--color-success)
+                    {% elif prediction.risk_category == 'Medium' %}var(--color-warning)
+                    {% else %}var(--color-danger){% endif %};">
+                    {{ prediction.risk_percentage }}%
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 1.5rem; display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+                <div><strong>Classification Verdict:</strong> {{ prediction.predicted_label }} (Class {{ prediction.predicted_class }})</div>
+                <div><strong>Model Classification Threshold:</strong> {{ prediction.classification_threshold }}</div>
+                <div><strong>Model Architecture:</strong> {{ prediction.model_name }}</div>
+            </div>
+        </div>
+        
+        <!-- Risk Gauge Card -->
+        <div class="gauge-card">
+            <div>
+                <h3 style="margin-bottom: 5px;">Visual Risk Gauge</h3>
+                <p style="font-size: 0.9rem; color: var(--text-secondary);">Applicant location relative to policy-selected boundaries.</p>
+            </div>
+            
+            <div class="gauge-track-wrapper">
+                <div class="gauge-labels">
+                    <span style="color: var(--color-success);">Low</span>
+                    <span style="color: var(--color-warning);">Medium</span>
+                    <span style="color: var(--color-danger);">High</span>
+                </div>
+                <!-- Progress track -->
+                <div class="gauge-track">
+                    <!-- Position pin based on probability -->
+                    <div class="gauge-pin" style="left: {{ prediction.risk_probability * 100 }}%;"></div>
+                </div>
+                <div class="gauge-axis-labels">
+                    <span>0.0 (0%)</span>
+                    <span>Boundary: 0.12 (12%)</span>
+                    <span>Boundary: 0.35 (35%)</span>
+                    <span>1.0 (100%)</span>
+                </div>
+            </div>
+            
+            <div style="background-color: rgba(255,255,255,0.02); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 18px; font-size: 0.85rem; color: var(--text-secondary);">
+                <strong>Risk Rationale:</strong> The boundaries 0.12 and 0.35 are policy-selected risk boundaries supported by out-of-fold training data. Underwriter review is recommended for Medium Risk profiles.
+            </div>
+        </div>
+    </div>
+    
+    <!-- Input Summary -->
+    <div class="card" style="padding: 2rem;">
+        <h3 style="margin-bottom: 1.5rem;">Applicant Ledger Summary</h3>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem 2rem;">
+            <!-- Personal -->
+            <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 16px;">
+                <h5 style="color: var(--color-primary); margin-top: 0; margin-bottom: 10px;">Personal Details</h5>
+                <p style="margin: 0; font-size: 0.9rem;"><strong>Age:</strong> {{ explanation.top_risk_increasing_factors[0].value if explanation_available else 'N/A' }} years</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem;"><strong>Employment:</strong> {{ explanation.top_risk_decreasing_factors[0].value if explanation_available else 'N/A' }} years</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem;"><strong>Home Ownership:</strong> {{ explanation.top_risk_increasing_factors[1].value if (explanation_available and explanation.top_risk_increasing_factors|length > 1) else 'N/A' }}</p>
+            </div>
+            <!-- Financial -->
+            <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 16px;">
+                <h5 style="color: var(--color-primary); margin-top: 0; margin-bottom: 10px;">Financial Profile</h5>
+                <p style="margin: 0; font-size: 0.9rem;"><strong>Annual Income:</strong> {{ explanation.top_risk_decreasing_factors[0].value if explanation_available else 'N/A' }}</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem;"><strong>Previous Defaults:</strong> {{ explanation.top_risk_decreasing_factors[1].value if (explanation_available and explanation.top_risk_decreasing_factors|length > 1) else 'N/A' }}</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem;"><strong>Credit History Length:</strong> {{ explanation.top_risk_decreasing_factors[2].value if (explanation_available and explanation.top_risk_decreasing_factors|length > 2) else 'N/A' }} years</p>
+            </div>
+            <!-- Loan Request -->
+            <div style="background: rgba(255,255,255,0.01); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 16px;">
+                <h5 style="color: var(--color-primary); margin-top: 0; margin-bottom: 10px;">Loan Profile</h5>
+                <p style="margin: 0; font-size: 0.9rem;"><strong>Loan Amount:</strong> {{ explanation.top_risk_decreasing_factors[3].value if (explanation_available and explanation.top_risk_decreasing_factors|length > 3) else 'N/A' }}</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem;"><strong>Loan Purpose:</strong> {{ explanation.top_risk_increasing_factors[2].value if (explanation_available and explanation.top_risk_increasing_factors|length > 2) else 'N/A' }}</p>
+                <p style="margin: 5px 0 0 0; font-size: 0.9rem;"><strong>Loan-to-Income Ratio:</strong> {{ explanation.top_risk_increasing_factors[0].value if explanation_available else 'N/A' }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SHAP Local Contributions Section -->
+    <div>
+        {% if explanation_available %}
+            <div class="shap-grid">
+                <!-- Increasing -->
+                <div class="shap-panel panel-increasing">
+                    <h3>Top Risk-Increasing Factors</h3>
+                    {% if explanation.top_risk_increasing_factors %}
+                        {% for factor in explanation.top_risk_increasing_factors %}
+                            <div class="factor-card">
+                                <div class="factor-header">
+                                    <span>{{ factor.friendly_feature }}</span>
+                                    <span class="factor-impact-badge impact-inc">+{{ factor.shap_value }} log-odds</span>
+                                </div>
+                                <div class="factor-desc">{{ factor.description }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">No significant risk-increasing factors were identified.</p>
+                    {% endif %}
+                </div>
+                
+                <!-- Decreasing -->
+                <div class="shap-panel panel-decreasing">
+                    <h3>Top Risk-Decreasing Factors</h3>
+                    {% if explanation.top_risk_decreasing_factors %}
+                        {% for factor in explanation.top_risk_decreasing_factors %}
+                            <div class="factor-card">
+                                <div class="factor-header">
+                                    <span>{{ factor.friendly_feature }}</span>
+                                    <span class="factor-impact-badge impact-dec">{{ factor.shap_value }} log-odds</span>
+                                </div>
+                                <div class="factor-desc">{{ factor.description }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">No significant risk-decreasing factors were identified.</p>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 15px; font-style: italic; line-height: 1.45;">
+                {{ explanation.disclaimer }}
+            </p>
+        {% else %}
+            <div style="background-color: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1.5rem; border-radius: var(--radius-lg); color: var(--color-danger);">
+                <h4 style="color: var(--color-danger); margin-top: 0;">SHAP Explanation Layer Offline</h4>
+                <p style="margin-bottom: 0; font-size: 0.9rem; color: var(--text-secondary);">
+                    The system prediction and calibration services remain fully operational. Explainability calculations degraded gracefully: {{ shap_error or "Service offline" }}.
+                </p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Disclaimer Callout -->
+    <div style="padding: 1.5rem; background-color: rgba(245, 158, 11, 0.03); border: 1px solid rgba(245, 158, 11, 0.15); border-left: 4px solid var(--color-warning); border-radius: var(--radius-sm); font-size: 0.9rem; color: var(--color-warning); line-height: 1.5;">
+        <p style="margin: 0; font-weight: bold; color: var(--color-warning);">Academic Use Disclaimer:</p>
+        <p style="margin: 5px 0 0 0;">{{ prediction.disclaimer }}</p>
+    </div>
+    
+    <!-- Navigation Buttons -->
+    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 20px;">
+        <a href="/" class="btn btn-primary">Analyze Another Applicant</a>
+        <a href="/about" class="btn btn-secondary">Learn About the Model</a>
+    </div>
+</div>
+{% endblock %}
